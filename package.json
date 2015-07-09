@@ -10,7 +10,8 @@
     "pg": "*",
     "ejs": "^2.3.1",
     "express": "~4.9.x",
-      "require-dir":"*"
+      "require-dir":"*",
+      "body-parser":"*"
   },
   "engines": {
     "node": "0.12.2"

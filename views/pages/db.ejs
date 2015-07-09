@@ -2,6 +2,7 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+  <script src="/javascript/addUser.js"></script>
 </head>
 
 <body>
@@ -16,7 +17,11 @@
         <li><%= r.id %> - <%= r.name %></li>
     <% }); %>
 </ul>
-
+<h2> Tilføj nyt medlem</h2>
+<input id="user-name" type="text"/>
+<input id="user-email" type="text"/>
+<input id="new-user-submit" type="submit"/>
+<div id="output"/>
 </div>
 
 </body>
