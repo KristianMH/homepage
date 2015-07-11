@@ -3,6 +3,7 @@
 <head>
   <% include ../partials/header.ejs %>
   <script src="/javascript/addUser.js"></script>
+  <script src="/javascript/removeUser.js"></script>
 </head>
 
 <body>
@@ -12,11 +13,18 @@
 <div class="container">
 <h2>Database Results</h2>
 
-<ul>
-    <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %></li>
+<table id="usersTable">
+  <thead>
+    <th> Navn </th>
+    <th> Email</th>
+  </thead>
+  <tbody>
+    <% results.forEach(function(row) { %>
+       <tr><td> <%= row.name %></td><td><%=row.email%> </td>
+       <td><a href="#" id=<%=row.id%> class="removeUserLink">X</a></td></tr>
     <% }); %>
-</ul>
+    </tbody>
+</table>
 <h2> Tilføj nyt medlem</h2>
 <input id="user-name" type="text"/>
 <input id="user-email" type="text"/>

@@ -12,7 +12,15 @@ $(document).ready(function () {
             processData: false,
             data: JSON.stringify(payload),
             complete: function (data) {
-                $('#output').html(data.responseText);
+                var arr = $.map(data.responseJSON, function(el) { return el; });
+                $("tbody").empty();
+                for (var i=0; i < arr.length; i++) {
+                    var row = arr[i];
+                    $("tbody").append('<tr><td>'+row.name+'</td><td>'+row.email+
+                                      '</td><td><a href="#" id='+row.id+
+                                      'class="removeUserLink">X</a></td></tr>"');
+                }
+                $("#output").html("<p>"+payload.name+" blev tilføjet til databasen");
             }
         });
     });
