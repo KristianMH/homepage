@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.removeUserLink').click(function () {
+    $('#usersTable').on("click",".removeUserLink", function () {
         var id = this.id
         $.ajax({
             url: "/users/remove/"+id,
