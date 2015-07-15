@@ -2,6 +2,7 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+    <script src="/javascript/loginAdmin.js"></script>
 </head>
 
 <body>
@@ -10,6 +11,12 @@
 
    <h2> Variable </h2>
    <p><%= title%></p>
+   
+<input type="text" id="login-email" placeholder="Skriv din email her" />
+<input type="password" id="login-password" />
+<input type="submit" id="admin-login" value="login"/>
+
+
 </div>
 
 
