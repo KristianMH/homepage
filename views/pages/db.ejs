@@ -4,6 +4,7 @@
   <% include ../partials/header.ejs %>
   <script src="/javascript/addUser.js"></script>
   <script src="/javascript/removeUser.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/db.css" />
 </head>
 
 <body>
@@ -21,7 +22,7 @@
   <tbody>
     <% results.forEach(function(row) { %>
        <tr><td> <%= row.name %></td><td><%=row.email%> </td>
-       <td><a href="#" id=<%=row.id%> class="removeUserLink">X</a></td></tr>
+       <td><a href="#" id=<%=row.id%> class="removeUserLink"> </a></td></tr>
     <% }); %>
     </tbody>
 </table>
