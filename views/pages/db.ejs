@@ -4,6 +4,8 @@
   <% include ../partials/header.ejs %>
   <script src="/javascript/addUser.js"></script>
   <script src="/javascript/removeUser.js"></script>
+  <script src="/javascript/addAdmin.js"></script>
+  <script src="/javascript/loginAdmin.js"></script>
   <link rel="stylesheet" type="text/css" href="/stylesheets/db.css" />
 </head>
 
@@ -30,8 +32,19 @@
 <input id="user-name" type="text"/>
 <input id="user-email" type="text"/>
 <input id="new-user-submit" type="submit"/>
-<div id="output"/>
-</div>
+<div id="output"></div>
 
+<h2> Tilføj admin </h2>
+<input id="admin-name" placeholder="Admin navn" type="text"/>
+<input type="text" placeholder="admin email" id="admin-email" />
+<input type="password" placeholder="skiv dit password her"id="admin-password" />
+<br />
+<input type="submit" id="admin-submit" value="tilføj admin"/>
+
+<br /><br />
+<input type="text" id="login-email" placeholder="Skriv din email her" />
+<input type="password" id="login-password" />
+<input type="submit" id="admin-login" value="login">
+</div>
 </body>
 </html>
