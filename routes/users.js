@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
                      [data.name, data.email], function(err, result){
                          if (err) throw err;
                      });
-        client.query("SELECT * from USERS", function(err, result){
+        client.query("SELECT * from USERS ORDER BY id", function(err, result){
             done();
             if (err) throw err;
             res.send({results:result.rows});
@@ -48,5 +48,15 @@ router.post("/admin", function(req,res){
                     });
     });
 });
-
+router.post("/updateUser", function(req,res){
+    var data = {email: req.body.email, name: req.body.name, id: req.body.id};
+    pg.connect(process.env.DATABASE_URL+"?ssl=true", function(err, client, done){
+        if (err) throw err;
+        client.query("UPDATE users SET name=$1, email=$2 WHERE id=$3",
+                    [data.name,data.email,data.id], function (err, result) {
+                        if (err) throw err;
+                        res.send("");
+                    })
+    })
+})
 module.exports = router;

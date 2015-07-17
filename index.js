@@ -28,7 +28,7 @@ var sess;
 app.get('/', function(request, response) {
     sess=request.loginSession;
     sess.email;
-    if (!sess.loggedin==1){sess.loggedin = 0;}
+    if (!sess.loggedIn==1){sess.loggedIn = 0;}
     sess.admin;
     sess.username;
   response.render('pages/index', {title :"Testing something"});
@@ -42,7 +42,7 @@ app.get('/db', function (req, res) {
             console.log(err);
             res.send("Error " + err);
         }
-        client.query('SELECT * FROM users', function(err, result) {
+        client.query('SELECT * FROM users ORDER BY id', function(err, result) {
             done();
             if (err)
             { console.error(err); res.send("Error " + err); }

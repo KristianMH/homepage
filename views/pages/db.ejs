@@ -5,7 +5,7 @@
   <script src="/javascript/addUser.js"></script>
   <script src="/javascript/removeUser.js"></script>
   <script src="/javascript/addAdmin.js"></script>
-
+  <script src="/javascript/updateTableRow.js"></script>
   <link rel="stylesheet" type="text/css" href="/stylesheets/db.css" />
 </head>
 
@@ -16,18 +16,26 @@
 <div class="container">
 <h2>Database Results</h2>
 
-<table id="usersTable">
+<button id="btnAdd">New</button>
+<table id="tblData">
   <thead>
-    <th> Navn </th>
-    <th> Email</th>
+    <tr>
+      <th>Name </th>
+      <th>Email</th>
+      <th>     </th>
+    </tr>
   </thead>
   <tbody>
     <% results.forEach(function(row) { %>
-       <tr><td> <%= row.name %></td><td><%=row.email%> </td>
-       <td><a href="#" id=<%=row.id%> class="removeUserLink"> </a></td></tr>
+    <tr id=<%=row.id%>>
+      <td> <%= row.name %></td>
+      <td><%=row.email%> </td>
+      <td><img src="../trashcan_delete.ico" class="btnDelete"/>
+        <img src="../edit.gif" class="btnEdit"/></td>
+    </tr>
     <% }); %>
     </tbody>
-</table>
+  </table>
 <h2> Tilføj nyt medlem</h2>
 <input id="user-name" type="text"/>
 <input id="user-email" type="text"/>
@@ -37,12 +45,13 @@
 <h2> Tilføj admin </h2>
 <input id="admin-name" placeholder="Admin navn" type="text"/>
 <input type="text" placeholder="admin email" id="admin-email" />
-<input type="password" placeholder="skiv dit password her"id="admin-password" />
+<input type="password" placeholder="skiv dit password her" id="admin-password" />
 <br />
 <input type="submit" id="admin-submit" value="tilføj admin"/>
 
 <br /><br />
-<a href="/login/logout">log ud</a>
+<a href="/login/logout">log ud</a> <br /> <br />
+
 </div>
 </body>
 </html>
