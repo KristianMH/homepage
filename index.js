@@ -44,8 +44,8 @@ app.get('/db', function (req, res) {
             res.send("Error " + err);
         }
         //client.query('SELECT * FROM users ORDER BY id', function(err, result) {
-        client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id"+
-                     "order by id", function (err, result) {                  
+        client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id;",
+                     function (err, result) {                  
                          done();
                          if (err)
                          { console.error(err); res.send("Error " + err); }

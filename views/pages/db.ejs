@@ -27,7 +27,8 @@
     </tr>
   </thead>
   <tbody>
-    <% results.forEach(function(row) { %>
+    <% results.sort();
+       results.forEach(function(row) { %>
     <tr id=<%=row.id%>>
       <td> <%= row.name %></td>
       <td> <%=row.email  %> </td>
