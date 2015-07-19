@@ -24,6 +24,7 @@ app.use(session({
 app.use("/users",routes.users);
 app.use("/about",routes.about);
 app.use("/login",routes.login);
+app.use("/teams", routes.teams);
 var sess;
 app.get('/', function(request, response) {
     sess=request.loginSession;
@@ -42,13 +43,15 @@ app.get('/db', function (req, res) {
             console.log(err);
             res.send("Error " + err);
         }
-        client.query('SELECT * FROM users ORDER BY id', function(err, result) {
-            done();
-            if (err)
-            { console.error(err); res.send("Error " + err); }
-            else
-            { res.render('pages/db', {results: result.rows} ); }
-        });
+        //client.query('SELECT * FROM users ORDER BY id', function(err, result) {
+        client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id"+
+                     "order by id", function (err, result) {                  
+                         done();
+                         if (err)
+                         { console.error(err); res.send("Error " + err); }
+                         else
+                         { res.render('pages/db', {results: result.rows} ); }
+                     });
     });
 });
 app.listen(app.get('port'), function() {

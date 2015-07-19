@@ -13,12 +13,13 @@ $(document).ready(function () {
 
     function Save() {
         var par = $(this).parent().parent(); // the table row.
-        var tdName = par.children("td:nth-child(1)");
-        var tdEmail = par.children("td:nth-child(2)");
-        var tdButtons = par.children("td:nth-child(3)");
-        var userID = par.attr("id"); // TODO: Find id of selected row, if no id => add new user should be added
-        var newName = tdName.children().val();
-        var newEmail = tdEmail.children().val();
+        var tdName    = par.children("td:nth-child(1)");
+        var tdEmail   = par.children("td:nth-child(2)");
+        var tdTeam    = par.children("td:nth-child(3)");
+        var tdButtons = par.children("td:nth-child(4)");
+        var userID    = par.attr("id");
+        var newName   = tdName.children().val();
+        var newEmail  = tdEmail.children().val();
         tdName.text(tdName.children().val());
         tdEmail.text(tdEmail.children().val());
         tdButtons.html("<img src='../trashcan_delete.ico' class='btnDelete'/>"+
@@ -41,7 +42,7 @@ $(document).ready(function () {
             });
         } else {
             $.ajax({
-                url: "/Users",
+                url: "/users",
                 type: "POST",
                 contentType: "application/json",
                 processData: false,
@@ -56,11 +57,13 @@ $(document).ready(function () {
     };
     function Edit(){
         var par = $(this).parent().parent(); //table row
-        var tdName = par.children("td:nth-child(1)");
-        var tdEmail = par.children("td:nth-child(2)");
-        var tdButtons = par.children("td:nth-child(3)");
+        var tdName    = par.children("td:nth-child(1)");
+        var tdEmail   = par.children("td:nth-child(2)");
+        var tdTeam    = par.children("td:nth-child(3)");
+        var tdButtons = par.children("td:nth-child(4)");
         tdName.html("<input type='text' id='txtName' value='"+tdName.text()+"'/>");
         tdEmail.html("<input type='text' id='txtEmail' value='"+tdEmail.text()+"'/>");
+        // TODO: Make option to select Team from dropdown, make function that gets team list?
         tdButtons.html("<img src='../trashcan_delete.ico' class='btnDelete'/>"+
                        "<img src='../save.gif' class='btnSave'/>");
         $(".btnSave").bind("click", Save);
