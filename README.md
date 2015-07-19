@@ -3,7 +3,7 @@ Features:
 - brugere
 - login
 - teams
-- dynamisk table
+- dynamisk table \\
 WIP
 - Team view
 - User view
