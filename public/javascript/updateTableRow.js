@@ -20,14 +20,17 @@ $(document).ready(function () {
         var userID    = par.attr("id");
         var newName   = tdName.children().val();
         var newEmail  = tdEmail.children().val();
-        tdName.text(tdName.children().val());
-        tdEmail.text(tdEmail.children().val());
+        var newTeam   = tdTeam.children().val();
+        tdName.text(newName);
+        tdEmail.text(newEmail);
+        tdTeam.text($("#teamSelect option:selected").text());
         tdButtons.html("<img src='../trashcan_delete.ico' class='btnDelete'/>"+
                        "<img src='../edit.gif' class='btnEdit'/>");
         var payload = {
             name: newName,
             email: newEmail,
-            id : userID
+            id : userID,
+            teamid : newTeam
         }
         if (userID){
             $.ajax({
@@ -56,6 +59,24 @@ $(document).ready(function () {
         $(".btnEdit").bind("click", Edit);
     };
     function Edit(){
+        jQuery.extend({
+            getValues: function(url) {
+                var result = null;
+                $.ajax({
+                    url:url,
+                    type : "GET",
+                    contentType : "application/json",
+                    processData : false,
+                    async: false,
+                    success: function(data) {
+                        result = data;
+                    }
+                });
+                return result;
+            }
+        });
+        var teams = $.getValues("/teams")
+        console.log(teams);
         var par = $(this).parent().parent(); //table row
         var tdName    = par.children("td:nth-child(1)");
         var tdEmail   = par.children("td:nth-child(2)");
@@ -64,6 +85,14 @@ $(document).ready(function () {
         tdName.html("<input type='text' id='txtName' value='"+tdName.text()+"'/>");
         tdEmail.html("<input type='text' id='txtEmail' value='"+tdEmail.text()+"'/>");
         // TODO: Make option to select Team from dropdown, make function that gets team list?
+        tdTeam.html("<select id='teamSelect'></select>");
+        var list = teams.results;
+        $.each(list,function (i, item) {
+            $("#teamSelect").append($("<option>", {
+                value: item.team_id,
+                text : item.teamname +" "+item.year
+            }));            
+        });
         tdButtons.html("<img src='../trashcan_delete.ico' class='btnDelete'/>"+
                        "<img src='../save.gif' class='btnSave'/>");
         $(".btnSave").bind("click", Save);

@@ -49,11 +49,11 @@ router.post("/admin", function(req,res){
     });
 });
 router.post("/updateUser", function(req,res){
-    var data = {email: req.body.email, name: req.body.name, id: req.body.id};
+    var data = {email: req.body.email, name: req.body.name, id: req.body.id, teamid : req.body.teamid};
     pg.connect(process.env.DATABASE_URL+"?ssl=true", function(err, client, done){
         if (err) throw err;
-        client.query("UPDATE users SET name=$1, email=$2 WHERE id=$3",
-                    [data.name,data.email,data.id], function (err, result) {
+        client.query("UPDATE users SET name=$1, email=$2, teamid=$3 WHERE id=$4",
+                    [data.name,data.email,data.teamid,data.id], function (err, result) {
                         if (err) throw err;
                         res.send("");
                     })
