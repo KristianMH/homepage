@@ -4,6 +4,8 @@ var requireDir = require("require-dir");
 var routes = requireDir("routes");
 var bodyParser= require("body-parser");
 var session = require("client-sessions");
+var helpers = require("express-helpers");
+helpers(app);
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -20,12 +22,6 @@ app.use(session({
     secret :"someSecrectNoOneWillEverKnow",
     duration: 24*60*60*1000
 }));
-
-app.use("/users",routes.users);
-app.use("/about",routes.about);
-app.use("/login",routes.login);
-app.use("/teams", routes.teams);
-var sess;
 app.get('/', function(request, response) {
     sess=request.loginSession;
     sess.email;
@@ -34,9 +30,26 @@ app.get('/', function(request, response) {
     sess.username;
   response.render('pages/index', {title :"Testing something"});
 });
+// app.use with login should be placed before middleware-redirect if
+// user not logged in
+
+app.use("/login", routes.login);
+app.use(function (req, res, next) {
+    if (req.loginSession.loggedIn == 0){
+        res.redirect("/");
+    }else{
+    next();
+        }
+});
+app.use("/users", routes.users);
+app.use("/about", routes.about);
+
+app.use("/teams", routes.teams);
+var sess;
+
 app.get('/db', function (req, res) {
     if (req.loginSession.loggedIn == 0) {
-        return res.redirect("/");
+        res.redirect("/");
     }
     pg.connect(process.env.DATABASE_URL+'?ssl=true', function(err, client, done) {
         if (err){

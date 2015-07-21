@@ -58,5 +58,22 @@ router.post("/updateUser", function(req,res){
                         res.send("");
                     })
     })
-})
+});
+router.get("/view/:id", function (req, res) {
+    var id = req.params.id;
+    pg.connect(process.env.DATABASE_URL+"?ssl=true", function (err, client, done) {
+        var sql = "select * from tasks left outer join progress on"+
+                  " progress.user_id = tasks.task_id AND progress.user_id = $1;"
+        var progress;
+        client.query(sql,[id],function (err, result) {
+            if (err) throw err;
+            progress = result.rows;
+        });
+        client.query("select * from tasks", function (err, result) {
+            done();
+            if (err) throw err;
+            res.render("pages/user.ejs", {tasks: result.rows, progress:progress});
+        });
+    });
+});
 module.exports = router;

@@ -13,7 +13,8 @@
       "require-dir":"*",
       "body-parser":"*",
       "client-sessions":"*",
-      "bcrypt-nodejs":"*"
+      "bcrypt-nodejs":"*",
+      "express-helpers":"*"
   },
   "engines": {
     "node": "0.12.2"

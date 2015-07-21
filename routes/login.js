@@ -26,7 +26,7 @@ router.post("/", function (req,res){
                              sess.loggedIn = 1;
                              sess.admin=1;
                              sess.username=result.rows[0].name;
-                             res.send("hurra your loggedIn " +sess.username);
+                             res.redirect("/teams/view")
                          } else {
                              res.send("forkert login");
                          }

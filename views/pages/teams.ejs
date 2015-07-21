@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <script src="/javascript/addTeam.js"></script>
+  <script src="/javascript/removeUser.js"></script>
+  <script src="/javascript/addAdmin.js"></script>
+  <script src="/javascript/updateTableRowTeams.js"></script>
+  <script type="text/javascript" src="/ejs/ejs_production.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/db.css" />
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<div class="container">
+  <h2> Teams </h2>
+  <table id="teamsTbl">
+    <thead>
+    <th>Navn</th>
+    <th>År</th>
+    <th></th>
+    </thead>
+    <tbody>
+      <% results.forEach(function (row) { %>
+        <tr id=<%=row.team_id%>>
+          <td><%=row.teamname%></td>
+          <td><%=row.year%></td>
+          <td><%- link_to("Se hold", "view/"+row.team_id)%>
+          <td><img src="../trashcan_delete.ico" class="btnDelete"/>
+            <img src="../edit.gif" class="btnEdit"/></td>
+        </tr>
+     <% });%>
+    </tbody>
+    <button id="btnAdd">Tilføj Hold</button>
+  </table>
+  <div id="output"/>
+</div>
+</body>
+</html>
