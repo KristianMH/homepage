@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <% include ../partials/header.ejs %>
-  <script src="/javascript/addTeam.js"></script>
-  <script src="/javascript/removeUser.js"></script>
-  <script src="/javascript/addAdmin.js"></script>
-  <script src="/javascript/updateTableRow.js"></script>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/db.css" />
-</head>
+  <head>
+    <% include ../partials/header.ejs %>
+    <script src="/javascript/addTeam.js"></script>
+    <script src="/javascript/removeUser.js"></script>
+    <script src="/javascript/addAdmin.js"></script>
+    <script src="/javascript/updateTableRowTeam.js"></script>
+    <link  href="/stylesheets/db.css" rel="stylesheet" type="text/css"/>
+  </head>
 
-<body>
+  <body>
 
-<% include ../partials/nav.ejs %>
+    <% include ../partials/nav.ejs %>
 
-<div class="container">
-  <h2> Team <%=teamName[0].teamname+" "+teamName[0].year %> </h2>
-  <table id="teamsTbl">
-    <thead>
-    <th>Navn</th>
-    <th>År</th>
-    </thead>
-    <tbody>
-      <% results.forEach(function (row) { %>
-        <tr id=<%=row.id%>>
-          <td><%=row.name%></td>
-          <td><%=row.email%></td>
-        </tr>
-     <% });%>
-    </tbody>
-  </table>
-</div>
+    <div class="container">
+      <h2>
+        Team
+        <%=teamName[0].teamname+" "+teamName[0].year %>
+      </h2>
+      <button id="btnAdd">Tilføj medlem</button>
+      <table id="memberTbl" value=<%=teamName[0].team_id%>>
+        <thead>
+          <th>Navn</th>
+          <th>Email</th>
+          <th>Progress</th>
+      </thead>
+      <tbody>
+        <% results.forEach(function (row) { %>
+          <tr id=<%=row.id%>>
+            <td><%=row.name%></td>
+            <td><%=row.email%></td>
+            <td></td>
+            <td><img  class='btnDelete' src='/trashcan_delete.ico'/>
+              <img  class='btnEdit' src='/edit.gif'/></td>
+          </tr>
+        <% });%>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

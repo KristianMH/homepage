@@ -4,12 +4,12 @@ $(document).ready(function () {
             "<tr>"+
             "<td><input type='text'/></td>"+
             "<td><input type='text'/></td>"+
-            "<td><img src='../trashcan_delete.ico' class='btnDelete'/>"+
-            "<img src='../save.gif' class='btnSave'></td>"+
+            "<td><img src='/trashcan_delete.ico' class='btnDelete'/>"+
+            "<img src='/save.gif' class='btnSave'></td>"+
             "</tr>");
         $(".btnSave").bind("click", Save);
 	    $(".btnDelete").bind("click", Delete);
-    }; 
+    };
 
     function Save() {
         var par = $(this).parent().parent(); // the table row.
@@ -88,7 +88,7 @@ $(document).ready(function () {
             $("#teamSelect").append($("<option>", {
                 value: item.team_id,
                 text : item.teamname +" "+item.year
-            }));            
+            }));
         });
         tdButtons.html("<img src='../trashcan_delete.ico' class='btnDelete'/>"+
                        "<img src='../save.gif' class='btnSave'/>");
@@ -113,7 +113,7 @@ $(document).ready(function () {
                 par.remove();
             }
     };
-    
+
     $(function(){
         $(".btnEdit").bind("click",Edit);
         $(".btnDelete").bind("click", Delete);

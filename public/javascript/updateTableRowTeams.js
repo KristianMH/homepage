@@ -5,12 +5,12 @@ $(document).ready(function () {
             "<td><input type='text'/></td>"+
             "<td><input type='text'/></td>"+
             "<td></td>"+
-            "<td><img src='../trashcan_delete.ico' class='btnDelete'/>"+
-            "<img src='../save.gif' class='btnSave'></td>"+
+            "<td><img src='/trashcan_delete.ico' class='btnDelete'/>"+
+            "<img src='/save.gif' class='btnSave'></td>"+
             "</tr>");
         $(".btnSave").bind("click", Save);
 	    $(".btnDelete").bind("click", Delete);
-    }; 
+    };
 
     function Save() {
         var par = $(this).parent().parent(); // the table row.
@@ -90,7 +90,7 @@ $(document).ready(function () {
                 par.remove();
             }
     };
-    
+
     $(function(){
         $(".btnEdit").bind("click",Edit);
         $(".btnDelete").bind("click", Delete);
