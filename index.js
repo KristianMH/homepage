@@ -1,8 +1,10 @@
+/* global process */
+/* global __dirname */
 var express = require('express');
 var app = express();
 var requireDir = require("require-dir");
 var routes = requireDir("routes");
-var bodyParser= require("body-parser");
+var bodyParser = require("body-parser");
 var session = require("client-sessions");
 var helpers = require("express-helpers");
 helpers(app);
@@ -18,57 +20,57 @@ app.set('view engine', 'ejs');
 
 var pg = require("pg");
 app.use(session({
-    cookieName:"loginSession",
-    secret :"someSecrectNoOneWillEverKnow",
-    duration: 24*60*60*1000
+    cookieName: "loginSession",
+    secret: "someSecrectNoOneWillEverKnow",
+    duration: 24 * 60 * 60 * 1000
 }));
-app.get('/', function(request, response) {
-    sess=request.loginSession;
+var sess = null;
+app.get('/', function (request, response) {
+    sess = request.loginSession;
     sess.email;
-    if (!sess.loggedIn==1){sess.loggedIn = 0;}
+    if (!(sess.loggedIn == 1)) {
+        sess.loggedIn = 0;
+    }
     sess.admin;
     sess.username;
-  response.render('pages/index', {title :"Testing something"});
+    response.render('pages/index', { title: "Testing something" });
 });
+
 // app.use with login should be placed before middleware-redirect if
 // user not logged in
 
 app.use("/login", routes.login);
 app.use(function (req, res, next) {
-    if (req.loginSession.loggedIn == 0){
+    if (req.loginSession.loggedIn == 0) {
         res.redirect("/");
-    }else{
-    next();
-        }
+    } else {
+        next();
+    }
 });
 app.use("/users", routes.users);
 app.use("/about", routes.about);
 
 app.use("/teams", routes.teams);
-var sess;
 
 app.get('/db', function (req, res) {
-    if (req.loginSession.loggedIn == 0) {
-        res.redirect("/");
+   pg.connect(process.env.DATABASE_URL+"?ssl=true", function(err, client, done){
+    if (err) {
+        console.log(err);
+        res.send("Error " + err);
     }
-    pg.connect(process.env.DATABASE_URL+'?ssl=true', function(err, client, done) {
-        if (err){
-            console.log(err);
-            res.send("Error " + err);
-        }
-        //client.query('SELECT * FROM users ORDER BY id', function(err, result) {
-        client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id;",
-                     function (err, result) {                  
-                         done();
-                         if (err)
-                         { console.error(err); res.send("Error " + err); }
-                         else
-                         { res.render('pages/db', {results: result.rows} ); }
-                     });
-    });
+    //client.query('SELECT * FROM users ORDER BY id', function(err, result) {
+    client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id;",
+        function (err, result) {
+            done();
+            if (err)
+            { console.error(err); res.send("Error " + err); }
+            else
+            { res.render('pages/db', { results: result.rows }); }
+        });
 });
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+});
+app.listen(app.get('port'), function () {
+    console.log('Node app is running on port', app.get('port'));
 });
 
 
