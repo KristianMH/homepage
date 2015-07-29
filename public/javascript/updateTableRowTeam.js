@@ -4,6 +4,7 @@ $(document).ready(function() {
       "<tr>" +
       "<td><input type='text'/></td>" +
       "<td><input type='text'/></td>" +
+      "<td></td>"+
       "<td><img src='/trashcan_delete.ico' class='btnDelete'/>" +
       "<img src='/save.gif' class='btnSave'></td>" +
       "</tr>");
@@ -48,6 +49,7 @@ $(document).ready(function() {
         processData: false,
         data: JSON.stringify(payload),
         complete: function(data) {
+            par.children("td:nth-child(3)").html("<td>0</td>");
           $("#output").html("<p>" + payload.name + " blev tilføjet til databasen");
         }
       });

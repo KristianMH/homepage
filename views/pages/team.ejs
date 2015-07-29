@@ -26,15 +26,15 @@
           <th>Progress</th>
       </thead>
       <tbody>
-        <% results.forEach(function (row) { %>
-          <tr id=<%=row.id%>>
-            <td><%=row.name%></td>
-            <td><%=row.email%></td>
-            <td></td>
+        <% console.log(progress); for (i=0; i < results.length; i+=1) { %>
+          <tr id=<%=results[i].id%>>
+            <td><%=results[i].name%></td>
+            <td><%=results[i].email%></td>
+            <td><%=progress[i]%> </td>
             <td><img  class='btnDelete' src='/trashcan_delete.ico'/>
               <img  class='btnEdit' src='/edit.gif'/></td>
           </tr>
-        <% });%>
+        <% };%>
       </tbody>
     </table>
   </div>
