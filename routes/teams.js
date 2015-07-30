@@ -77,11 +77,13 @@ router.get("/view/:id", function(req, res) {
     var users;
     var teamName;
     var userProgress = new Array();
+    var numOfTask;
     var finishReq = function () {
         res.render("pages/team", {
             results: users,
             teamName: teamName,
-            progress: userProgress
+            progress: userProgress,
+            tasks: numOfTask
         });
     }
     pg.connect(process.env.DATABASE_URL + "?ssl=true", function(err, client, done) {
@@ -91,24 +93,23 @@ router.get("/view/:id", function(req, res) {
                          if (err) throw err;
                          teamName = result.rows
                      });
-        
+        client.query("select COUNT(*) from tasks", function (err, result) {
+            if (err) throw eer;
+            numOfTask = result.rows[0].count;
+        })
         client.query("select * from teams inner join users on users.teamid = teams.team_id" +
                      " WHERE users.teamid = $1 order by users.id;", [req.params.id],
                      function(err, result) {
-                         done();
                          if (err) throw err;
                          users = result.rows;
-                         if (users.length === 0){
-                             finishReq();
-                         }
-                         for(var i = 0; i < users.length; i++) {
-                             client.query("select COUNT (*) from (users inner join progress on users.id=progress.user_id) inner join teams on users.teamid=teams.team_id where users.teamid=$1",
+                         if (users.length === 0){finishReq();}
+                         for (var i = 0; i < users.length; i++) {
+                             client.query("select COUNT (*) from (users inner join progress"+
+                                          " on users.id=progress.user_id) inner join teams on"+                                          " users.teamid=teams.team_id where users.teamid=$1",
                                               [users[i].id],function (err,result) {
                                                   if (err) throw err;
                                                   userProgress.push(result.rows[0].count);
                                                   if (users.length === userProgress.length){
-                                                      console.log("users length:"+users.length);
-                                                      console.log("prog length"+userProgress.length);
                                                       finishReq();
                                                   }
                                               });

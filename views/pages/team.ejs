@@ -26,11 +26,11 @@
           <th>Progress</th>
       </thead>
       <tbody>
-        <% console.log(progress); for (i=0; i < results.length; i+=1) { %>
+        <% for (i=0; i < results.length; i+=1) { %>
           <tr id=<%=results[i].id%>>
             <td><%=results[i].name%></td>
             <td><%=results[i].email%></td>
-            <td><%=progress[i]%> </td>
+            <td><progress value=<%=progress[i]%> max=<%=tasks%> </progress> </td>
             <td><img  class='btnDelete' src='/trashcan_delete.ico'/>
               <img  class='btnEdit' src='/edit.gif'/></td>
           </tr>
