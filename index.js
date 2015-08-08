@@ -24,7 +24,7 @@ var pg = require("pg");
 app.use(session({
   cookieName: "loginSession",
   secret: "someSecrectNoOneWillEverKnow",
-  duration: 24 * 60 * 60 * 1000
+  duration: 2 * 60 * 60 * 1000
 }));
 var sess = null;
 app.get('/', function(request, response) {
