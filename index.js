@@ -40,10 +40,12 @@ app.get('/', function(request, response) {
   });
 });
 
-// app.use with login should be placed before middleware-redirect if
-// user not logged in
-
+/**
+ * app.use with login should be placed before middleware-redirect if
+ * user not logged in
+ **/ 
 app.use("/login", routes.login);
+// Chekcs if user is logged in if not redicerets request to front page else next middleware. 
 app.use(function(req, res, next) {
   if (req.loginSession.loggedIn == 0) {
     res.redirect("/");
@@ -51,32 +53,13 @@ app.use(function(req, res, next) {
     next();
   }
 });
+// user middleware
 app.use("/users", routes.users);
+// about middleware
 app.use("/about", routes.about);
-
+// team middleware. 
 app.use("/teams", routes.teams);
 
-app.get('/db', function(req, res) {
-  pg.connect(process.env.DATABASE_URL + "?ssl=true", function(err, client, done) {
-    if (err) {
-      console.log(err);
-      res.send("Error " + err);
-    }
-    //client.query('SELECT * FROM users ORDER BY id', function(err, result) {
-    client.query("select * from teams inner join users on teams.team_id = users.teamid order by users.id;",
-      function(err, result) {
-        done();
-        if (err) {
-          console.error(err);
-          res.send("Error " + err);
-        } else {
-          res.render('pages/db', {
-            results: result.rows
-          });
-        }
-      });
-  });
-});
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
