@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <% for (i=0; i < results.length; i+=1) { %>
-          <tr id=<%=results[i].id%>>
+          <tr id=<%=results[i].id%> data-href=<%="/users/view/"+results[i].id%> >
             <td><%=results[i].name%></td>
             <td><%=results[i].email%></td>
             <td><progress value=<%=progress[i]%> max=<%=tasks%> </progress> </td>
